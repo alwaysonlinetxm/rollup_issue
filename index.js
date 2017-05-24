@@ -1,3 +1,3 @@
-import 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch';
 
 console.log(fetch);
