@@ -1,12 +1,14 @@
 import commonjs from 'rollup-plugin-commonjs';
-import resolve from 'rollup-plugin-node-resolve';
+import nodeResolve from 'rollup-plugin-node-resolve';
+import json from 'rollup-plugin-json';
 
 export default {
   entry: 'index.js',
   dest: 'dist/bundle.js',
   format: 'cjs',
   plugins: [
-    resolve(), // for support external module in node_modules
+    json(),
+    nodeResolve(), // for support external module in node_modules
     commonjs()
   ]
 };
