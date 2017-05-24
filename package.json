@@ -1,0 +1,21 @@
+{
+  "name": "rollup_issue",
+  "version": "1.0.0",
+  "description": "producing rollup issue",
+  "main": "index.js",
+  "repository": "https://github.com/alwaysonlinetxm/rollup_issue.git",
+  "author": "alwaysonlinetxm",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=development rollup -c -w",
+    "build": "NODE_ENV=production rollup -c"
+  },
+  "devDependencies": {
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-watch": "^3.2.2"
+  },
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.1"
+  }
+}
