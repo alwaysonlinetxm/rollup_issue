@@ -1,3 +1,2 @@
-import 'isomorphic-fetch';
-
-console.log(fetch);
+// global
+const a = { ...b };
