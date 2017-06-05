@@ -1,7 +1,8 @@
 import commonjs from 'rollup-plugin-commonjs';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import json from 'rollup-plugin-json';
-// import globals from "rollup-plugin-node-globals";
+import nodeBuildin from 'rollup-plugin-node-builtins';
+import globals from "rollup-plugin-node-globals";
 import babel from "rollup-plugin-babel";
 
 export default {
@@ -9,13 +10,19 @@ export default {
   dest: 'dist/bundle.js',
   format: 'cjs',
   plugins: [
-    nodeResolve(), // for support external module in node_modules
-    commonjs(),
-    // globals(),
+    nodeResolve({
+      preferBuiltins: true
+    }), // for support external module in node_modules
+
+
     json(),
     babel({
       exclude: "node_modules/**",
       // plugins appears to be ignored. use .babelrc
-    })
+    }),
+    globals(),
+    nodeBuildin(),
+    commonjs(),
+
   ]
 };
