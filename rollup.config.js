@@ -13,16 +13,12 @@ export default {
     nodeResolve({
       preferBuiltins: true
     }), // for support external module in node_modules
-
-
     json(),
     babel({
       exclude: "node_modules/**",
-      // plugins appears to be ignored. use .babelrc
-    }),
+    }), // before global and buildin to solve "'default' is not exported by xxx..."
     globals(),
     nodeBuildin(),
-    commonjs(),
-
+    commonjs(), // in the end to solve many problems
   ]
 };
