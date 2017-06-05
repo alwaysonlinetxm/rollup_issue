@@ -17,8 +17,8 @@ export default {
     babel({
       exclude: "node_modules/**",
     }), // before global and buildin to solve "'default' is not exported by xxx..."
-    globals(),
-    nodeBuildin(),
+    globals(), // to include Node globals
+    nodeBuildin(), // to include Node builtins, some modules may depand on global
     commonjs(), // in the end to solve many problems
   ]
 };
