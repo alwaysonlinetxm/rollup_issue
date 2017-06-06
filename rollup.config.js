@@ -10,9 +10,6 @@ import globals from "rollup-plugin-node-globals";
 import babel from "rollup-plugin-babel";
 import replace from 'rollup-plugin-replace';
 
-const getModuleRe = /.*\/(.*?)\.js'$/, warn = msg => console.warn(msg);
-
-
 //------//
 // Init //
 //------//
@@ -30,25 +27,6 @@ export default {
   entry: 'index.js',
   dest: 'dist/bundle.js',
   format: 'iife',
-  onwarn(aWarning) {
-    const { code, frame, loc, message, url } = aWarning
-      , moduleName = getModuleName(message)
-      ;
-
-    if (
-      code === 'MISSING_EXPORT'
-      && startsWith('\u0000commonjs-proxy:', loc.file)
-      && startsWith("'default' is not exported by", message)
-      && notActuallyMissingDefaultExport(frame, moduleName)
-    ) {
-      // do nothing
-      return
-    } else {
-      // just a quick, colorless version of rollup's default warning
-      const lines = [message, url, `${loc.file} (${loc.line}:${loc.column})`, frame];
-      lines.forEach(warn);
-    }
-  },
   plugins: [
     nodeResolve({
       preferBuiltins: true
