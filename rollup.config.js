@@ -1,3 +1,7 @@
+//---------//
+// Imports //
+//---------//
+
 import commonjs from 'rollup-plugin-commonjs';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import json from 'rollup-plugin-json';
@@ -7,6 +11,20 @@ import babel from "rollup-plugin-babel";
 import replace from 'rollup-plugin-replace';
 
 const getModuleRe = /.*\/(.*?)\.js'$/, warn = msg => console.warn(msg);
+
+
+//------//
+// Init //
+//------//
+
+const getModuleRe = /.*\/(.*?)\.js'$/
+  , warn = msg => console.warn(msg)
+  ;
+
+
+//------//
+// Main //
+//------//
 
 export default {
   entry: 'index.js',
@@ -45,8 +63,31 @@ export default {
     globals(), // to include Node globals
     nodeBuildin(), // to include Node builtins, some modules may depand on global
     commonjs(), // in the end to solve many problems
-  ]
+  ],
+  onwarn(aWarning) {
+    const { code, frame, loc, message, url } = aWarning
+      , moduleName = getModuleName(message)
+      ;
+
+    if (
+      code === 'MISSING_EXPORT'
+      && startsWith('\u0000commonjs-proxy:', loc.file)
+      && startsWith("'default' is not exported by", message)
+      && notActuallyMissingDefaultExport(frame, moduleName)
+    ) {
+      // do nothing
+      console.warn(aWarning.toString());
+      return
+    } else {
+      const lines = [message, url, `${loc.file} (${loc.line}:${loc.column})`, frame];
+      lines.forEach(warn);
+    }
+  }
 };
+
+//-------------//
+// Helper Fxns //
+//-------------//
 
 function startsWith(startsWithThis, aString) {
   return aString.slice(0, startsWithThis.length) === startsWithThis;
