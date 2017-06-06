@@ -1,9 +1,10 @@
 import 'isomorphic-fetch';
 import React from 'react';
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom';
 
 // global
-const a = { ...b };
+// const b = { s: 4 };
+// const a = { ...b };
 
 ReactDOM.render(
  <div>sdf</div>,
